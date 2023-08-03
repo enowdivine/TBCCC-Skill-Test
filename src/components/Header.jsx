@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const user = useSelector((state) => state.auth.user);
+
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav
@@ -54,20 +57,20 @@ const Header = () => {
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="/login"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Log in to add product<span aria-hidden="true">&rarr;</span>
-          </a>
-          <a href="/add-product">
-            <button
-              type="submit"
-              className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          {user === null ? (
+            <a
+              href="/login"
+              className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Add Product
-            </button>
-          </a>
+              Log in to add product<span aria-hidden="true">&rarr;</span>
+            </a>
+          ) : (
+            <a href="/add-product">
+              <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                Add Product
+              </button>
+            </a>
+          )}
         </div>
       </nav>
       {/* Mobile menu, show/hide based on menu open state. */}

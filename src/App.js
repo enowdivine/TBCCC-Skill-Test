@@ -10,6 +10,7 @@ import Register from "./pages/auth/Register";
 import Productdetails from "./pages/product/ProductDetails";
 import AddProduct from "./pages/product/AddProduct";
 import UpdateProduct from "./pages/product/UpdateProduct";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
   return (
@@ -23,8 +24,22 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {/* PROTECTED ROUTES */}
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path="/edit-product/:id" element={<UpdateProduct />} />
+          <Route
+            path="/add-product"
+            element={
+              <ProtectedRoute>
+                <AddProduct />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-product/:id"
+            element={
+              <ProtectedRoute>
+                <UpdateProduct />
+              </ProtectedRoute>
+            }
+          />
           {/* 404 ROUTE */}
           <Route path="*" element={<PageError />} />
         </Routes>
