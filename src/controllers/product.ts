@@ -71,7 +71,7 @@ class ProductClass {
       {
         $set: {
           title: req.body.title,
-          image: image.path,
+          image: image?.path,
           price: req.body.price,
           description: req.body.description,
         },
