@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import {
   singleProduct,
   updateProduct,
@@ -29,27 +28,30 @@ const UpdateProduct = () => {
 
   const updateProductHandler = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("price", price);
-    formData.append("description", desc);
-    formData.append("image", image);
-    const data = {
-      formData,
-      productId: router.id,
-    };
-    dispatch(updateProduct(data), setLoading(true)).then((res) => {
-      console.log(res);
-      if (res.meta.requestStatus === "fulfilled") {
-        setLoading(false);
-        toast.success(res.payload.message);
-        navigate("/");
-      }
-      if (res.meta.requestStatus === "rejected") {
-        setLoading(false);
-        toast.error(res.payload);
-      }
-    });
+    if (image) {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("price", price);
+      formData.append("description", desc);
+      formData.append("image", image);
+      const data = {
+        formData,
+        productId: router.id,
+      };
+      dispatch(updateProduct(data), setLoading(true)).then((res) => {
+        if (res.meta.requestStatus === "fulfilled") {
+          setLoading(false);
+          toast.success(res.payload.message);
+          navigate("/");
+        }
+        if (res.meta.requestStatus === "rejected") {
+          setLoading(false);
+          toast.error(res.payload);
+        }
+      });
+    } else {
+      toast.error("Image is rrequired");
+    }
   };
 
   return (
